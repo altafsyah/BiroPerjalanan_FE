@@ -17,7 +17,7 @@ export default function Modal({
       id="modalOverlay"
       className="fixed inset-0 h-full bg-black/20 flex justify-center items-center p-5"
     >
-      <div className="bg-white px-5 flex flex-col px-10 py-5 rounded-lg relative w-full md:w-fit lg:min-w-[350px] min-h-[200px]">
+      <div className="bg-white flex flex-col px-10 py-5 rounded-lg relative w-full md:w-fit lg:min-w-[350px] min-h-[200px]">
         <button
           type="button"
           onClick={toggle}

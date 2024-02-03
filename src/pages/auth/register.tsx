@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { register } from "../../modules/servcies/auth_service";
@@ -18,15 +18,15 @@ export default function Register() {
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  function handleChange(e: Event) {
-    const { name, value } = e.currentTarget;
+  function handleChange(e: ChangeEvent) {
+    const { name, value } = e.currentTarget as HTMLInputElement;
     setForm((prev) => ({
       ...prev,
       [name]: value,
     }));
   }
 
-  async function handleSubmit(e: Event) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsSubmit(true);
     if (form.password != form.confirmPassword) {

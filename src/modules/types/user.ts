@@ -15,7 +15,7 @@ interface IUser {
 }
 
 interface ITourist extends IUser {
-  location: sting;
+  location: string;
 }
 
-export { IAuthForm, IRegisterForm, IUser, ITourist };
+export type { IAuthForm, IRegisterForm, IUser, ITourist };
