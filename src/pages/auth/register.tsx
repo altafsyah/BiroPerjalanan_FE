@@ -41,6 +41,7 @@ export default function Register() {
         navigate("/login");
       }, 700);
     }
+    setIsSubmit(true);
   }
 
   return (
