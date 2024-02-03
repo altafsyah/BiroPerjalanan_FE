@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
-interface UserForm {
-  email: string;
-  password: string;
-}
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { IAuthForm } from "../../modules/types/user";
+import { signIn } from "../../modules/servcies/auth_service";
+import toast from "react-hot-toast";
 
 export default function Login() {
-  const [form, setForm] = useState<UserForm>({
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [form, setForm] = useState<IAuthForm>({
     email: "",
     password: "",
   });
@@ -22,17 +22,30 @@ export default function Login() {
 
   function handleSubmit(e: Event) {
     e.preventDefault();
-    console.log("halo");
+    console.log(location.state);
+    signIn(form).then((res) => {
+      if (res) {
+        toast.loading("Berhasil login, mengarahkan anda ke halaman Dashboard");
+        setTimeout(() => {
+          toast.dismiss();
+          navigate(location.state ? location.state.prev : "/", {
+            replace: true,
+          });
+        }, 1500);
+      } else {
+        toast.error("Terjadi Kesalahan");
+      }
+    });
   }
 
   return (
-    <main className="w-full h-screen flex flex-col justify-center items-center">
+    <main className="p-5 w-full h-screen flex flex-col justify-center items-center">
       <section>
         <h1 className="text-xl font-medium">Masuk sekarang</h1>
         <p className="mb-5 text-gray-400">
           Masuk dan kelola destinasi wisata anda
         </p>
-        <form className="w-[400px]">
+        <form className="w-[300px] md:w-[400px]" onSubmit={handleSubmit}>
           <div className="mb-3">
             <label>Email</label>
             <input

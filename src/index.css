@@ -1,3 +1,51 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes shimmering-dark {
+  0% {
+    @apply bg-gray-100;
+  }
+  25% {
+    @apply bg-gray-200;
+  }
+  50% {
+    @apply bg-gray-300;
+  }
+  75% {
+    @apply bg-gray-200;
+  }
+  100% {
+    @apply bg-gray-100;
+  }
+}
+
+@keyframes shimmering-dark {
+  0% {
+    @apply bg-gray-100;
+  }
+  25% {
+    @apply bg-gray-200;
+  }
+  50% {
+    @apply bg-gray-300;
+  }
+  75% {
+    @apply bg-gray-200;
+  }
+  100% {
+    @apply bg-gray-100;
+  }
+}
+
+.shimmer-dark {
+  animation: shimmering-dark 1.5s infinite linear;
+}
+
+.shimmer-light {
+  animation: shimmering-light 2s infinite linear;
+}
+
+.bordered-input {
+  @apply w-full p-2 border border-gray-300 rounded;
+}
