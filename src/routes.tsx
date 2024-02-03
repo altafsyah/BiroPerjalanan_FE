@@ -3,7 +3,7 @@ import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import Home from "./pages/dashboard/home";
 import Tourist from "./pages/dashboard/tourist";
-import { redirect, useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { getUserAuth, getUserData } from "./modules/servcies/auth_service.ts";
 import { IUser } from "./modules/types/user";
 
@@ -35,8 +35,8 @@ const authRoutes = [
 const protectedRoutes = {
   element: <Layout />,
   loader: async () => {
-    const response: IUser = await getUserData();
-    if (response) return response;
+    const response: IUser | null = await getUserData();
+    if (response !== null) return response;
     return redirect("/login");
   },
   children: [

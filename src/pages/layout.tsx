@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Outlet,
@@ -8,9 +9,10 @@ import {
 } from "react-router-dom";
 import { getUserAuth } from "../modules/servcies/auth_service";
 import { useEffect, useState } from "react";
+import { IUser } from "../modules/types/user";
 
 export default function Layout() {
-  const userData = useLoaderData();
+  const userData: IUser = useLoaderData() as IUser;
   const navigate = useNavigate();
   const location = useLocation();
   const [isSidebar, setIsSidebar] = useState<boolean>(false);
@@ -45,7 +47,7 @@ export default function Layout() {
         className="hidden lg:block relative bg-blue-400 col-span-2"
       >
         <div className="h-screen w-full sticky top-0 flex flex-col justify-between items-center py-10 px-5">
-          <Link href="/" className="text-white text-4xl">
+          <Link to="/" className="text-white text-4xl">
             <i className="bx bx-home-alt"></i>
           </Link>
           <div className="flex flex-col items-center gap-10">
@@ -79,7 +81,7 @@ export default function Layout() {
             className="block lg:hidden absolute bg-blue-400 z-20"
           >
             <div className="bg-blue-400 h-screen w-full sticky top-0 flex flex-col justify-between items-center py-10 px-5">
-              <Link href="/" className="text-white text-4xl">
+              <Link to="/" className="text-white text-4xl">
                 <i className="bx bx-home-alt"></i>
               </Link>
               <div className="flex flex-col items-center gap-10">

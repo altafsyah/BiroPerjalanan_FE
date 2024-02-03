@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Modal from "../../modules/components/modal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   getTouristById,
@@ -23,7 +24,7 @@ export default function Tourist() {
     isEditing: false,
     isDeleting: false,
   });
-  const [tourist, setTourist] = useState<ITourist>();
+  const [tourist, setTourist] = useState<ITourist | undefined>();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -31,13 +32,13 @@ export default function Tourist() {
     setIsModalOpen(!isModalOpen);
   };
 
-  const toggleModal = (id) => {
+  const toggleModal = (id: string) => {
     setModalType(id);
     toggleOpen();
   };
 
   async function fetchTourist() {
-    const res = await getTouristById(id);
+    const res = await getTouristById(id!);
     if (res) {
       setTourist(res);
     }
@@ -48,7 +49,7 @@ export default function Tourist() {
       ...prev,
       isDeleting: true,
     }));
-    const res = await deleteTourist(id);
+    const res = await deleteTourist(id!);
     setTimeout(() => {
       if (res) {
         toast.success("Berhasil menghapus");
@@ -66,7 +67,7 @@ export default function Tourist() {
     }, 500);
   }
 
-  async function confirmEdit(data) {
+  async function confirmEdit(data): Promise<void> {
     setState((prev) => ({
       ...prev,
       isEditing: true,
@@ -112,14 +113,16 @@ export default function Tourist() {
         className="flex flex-col w-full min-w-[300px] lg:w-fit gap-10 bg-white  border border-gray-200 rounded-xl items-center p-5"
       >
         <div className="w-32 aspect-square overflow-hidden rounded-full bg-gray-200">
-          <img src={tourist.avatar} className="object-cover" />
+          <img src={tourist ? tourist.avatar : ""} className="object-cover" />
         </div>
         <div className="text-center">
-          <h1 className="font-semibold">{tourist.name}</h1>
-          <h5 className="text-sm">{tourist.email}</h5>
+          <h1 className="font-semibold">{tourist ? tourist.name : "Nama"}</h1>
+          <h5 className="text-sm">
+            {tourist ? tourist.email : "email@email.com"}
+          </h5>
           <div className="text-sm flex justify-center items-center gap-2 text-gray-500">
             <i className="bx bxs-map-pin"></i>
-            <p>{tourist.location}</p>
+            <p>{tourist ? tourist.location : "Lokasi"}</p>
           </div>
         </div>
         <div className="flex flex-col gap-2 w-full">
@@ -131,7 +134,7 @@ export default function Tourist() {
             Edit
           </button>
           <button
-            tyoe="button"
+            type="button"
             onClick={() => toggleModal("delete")}
             className="bg-red-500 border border-red-700 hover:border-red-800 transition-all duration-150 hover:bg-red-600 rounded text-white w-full py-1"
           >
@@ -142,9 +145,9 @@ export default function Tourist() {
       <Modal isOpen={isModalOpen} toggle={toggleOpen}>
         {modalType === "edit" ? (
           <EditForm
-            tourist={tourist}
+            tourist={tourist!}
             isEditing={state.isEditing}
-            confirmEdit={confirmEdit}
+            confirmEdit={(data) => confirmEdit(data)}
           />
         ) : (
           <DeleteModal
@@ -164,19 +167,19 @@ function EditForm({
 }: {
   tourist: ITourist;
   isEditing: boolean;
-  confirmEdit: () => void;
+  confirmEdit: (data) => Promise<void>;
 }) {
   const [updated, setUpdated] = useState<ITourist>({ ...tourist });
 
-  function handleChange(e: Event) {
-    const { name, value } = e.currentTarget;
+  function handleChange(e: ChangeEvent) {
+    const { name, value } = e.currentTarget as HTMLInputElement;
     setUpdated((prev) => ({
       ...prev,
       [name]: value,
     }));
   }
 
-  async function handleSubmit(e: Event) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     confirmEdit(updated);
   }

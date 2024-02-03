@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { IAuthForm } from "../../modules/types/user";
 import { signIn } from "../../modules/servcies/auth_service";
@@ -12,15 +12,15 @@ export default function Login() {
     password: "",
   });
 
-  function handleChange(e: Event) {
-    const { name, value } = e.currentTarget;
+  function handleChange(e: ChangeEvent) {
+    const { name, value } = e.target as HTMLInputElement;
     setForm((prev) => ({
       ...prev,
       [name]: value,
     }));
   }
 
-  function handleSubmit(e: Event) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     signIn(form).then((res) => {
       if (res) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { ITourist } from "../types/user";
 import { addTourist } from "../servcies/tourist_service";
 import toast from "react-hot-toast";
@@ -12,16 +12,16 @@ export default function FormTourist({ toggle }: { toggle: () => void }) {
   });
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
-  function handleChange(e: Event) {
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    const { name, value } = e.currentTarget;
+    const { name, value } = e.target as HTMLInputElement;
     setData((prev) => ({
       ...prev,
       [name]: value,
     }));
   }
 
-  async function handleSubmit(e: Event) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsSubmit(true);
     const response = await addTourist(data);

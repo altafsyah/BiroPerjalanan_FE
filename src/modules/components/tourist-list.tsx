@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { ITourist } from "../types/user";
 import { getAllTourist } from "../servcies/tourist_service";
