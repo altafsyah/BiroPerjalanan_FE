@@ -31,7 +31,6 @@ export default function TouristList() {
 
   useEffect(() => {
     setIsFetching(true);
-    console.log("negara");
     fetchTourists();
   }, [pagination.currentPage]);
 

@@ -72,7 +72,6 @@ export default function Tourist() {
       isEditing: true,
     }));
     const res = await editTourist(data);
-    console.log(res);
     setTimeout(() => {
       if (res) {
         toast.success("Berhasil memperbarui data turis");

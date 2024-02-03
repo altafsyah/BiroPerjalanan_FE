@@ -30,7 +30,6 @@ export async function register(formData: IRegisterForm) {
       email: formData.email,
       password: formData.password,
     });
-    console.log(response);
     if (response.status === 201) {
       // localStorage.setItem("userAuth", response.data.data.Token);
       return true;
@@ -46,8 +45,6 @@ export async function register(formData: IRegisterForm) {
 export async function getUserData() {
   const token = await getUserAuth();
   const userId = await localStorage.getItem("userId");
-  console.log(token);
-  console.log(userId);
 
   try {
     const response = await axios.get(`${baseUrl}/users/${userId}`, {

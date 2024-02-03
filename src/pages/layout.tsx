@@ -26,8 +26,6 @@ export default function Layout() {
     }
   }
 
-  console.log(userData);
-
   useEffect(() => {
     validateToken();
   }, []);

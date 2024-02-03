@@ -12,7 +12,7 @@ export async function getAllTourist(page: number = 1) {
       },
     });
     if (response.status === 200) {
-      const touristList: Tourist[] = [];
+      const touristList: ITourist[] = [];
       response.data.data.map((tourist) => {
         touristList.push({
           id: tourist.id,
@@ -72,7 +72,6 @@ export async function addTourist(tourist: ITourist) {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response);
     if (response.status === 201 || response.status === 200) {
       return true;
     }

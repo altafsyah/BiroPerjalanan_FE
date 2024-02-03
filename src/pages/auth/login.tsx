@@ -22,7 +22,6 @@ export default function Login() {
 
   function handleSubmit(e: Event) {
     e.preventDefault();
-    console.log(location.state);
     signIn(form).then((res) => {
       if (res) {
         toast.loading("Berhasil login, mengarahkan anda ke halaman Dashboard");
